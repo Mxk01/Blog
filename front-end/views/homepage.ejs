@@ -1,0 +1,106 @@
+<%- include('./partials/header') %>
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
+
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand"  href="#">Bloggy</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+    <ul class="navbar-nav mr-auto">
+
+
+        <% if(!user) { %>
+      <li class="nav-item">
+        <a class="nav-link" href="/login">Login</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/register">Register</a>
+      </li>
+       <% } else { %>
+         <li class="nav-item">
+           <a class="nav-link btn btn-warning" href="#"><%= user.username %> </a>
+         </li>
+         <form  action="/logout" method="post">
+            <input class="btn btn-primary mt-1 ml-1" style="background-color:transparent; color:black; border:none;" type="submit" value="Logout">
+         </form>
+        <% } %>
+    </ul>
+
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title><%=user.username%></title>
+</head>
+<body style="background:#2c2c54; background-size:cover; background-repeat:no-repeat; ">
+    <div class="container">
+  <h1 class="mb-4 mt-5" style="font-family: 'Abril Fatface', cursive; color:#ffffff;">Blog Articles</h1>
+  <a href="/articles/new" class="btn btn-success" style="background-color:#ff4757; border:none;">New Article</a>
+  <a href="/articles/myArticle" class="btn btn-success" style="background-color:#ff4757; border:none;">My article</a>
+  <% articles.forEach(article => { %>
+    <div class="card mt-4">
+      <div class="card-body">
+        <h4 class="card-title"><%= article.title %></h4>
+        <div class="card-subtitle text-muted mb-2">
+          <a href="/articles/readMore/<%=article._id%>" class="btn btn-warning mt-5" style="border:none;">Read More</a>
+          <form action="/articles/deleteArticle/<%=article._id%>?_method=DELETE" method="POST" style="display:inline;">
+              <button type="submit"class="btn btn-warning mt-5" style="background-color:#ff4757; border:none;">Delete</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  <% }) %>
+<br>
+<br>
+<% if(articles.length>0) { %>
+      <div class="text-center">
+        <% if (pages > 0) { %>
+        <ul class="pagination">
+          <% if (current == 1) { %>
+            <li class="page-item disabled"><a class="page-link">First</a></li> <%# if the current page is 1 disable this  ,no need to go to page 1 %>
+        <% } else { %>
+            <li><a class="page-link" href="/homepage?page=1">First</a></li> <%# if we are on a different page ,this should be accessible %>
+        <% } %>
+        <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+        <% if (i !== 1) { %>
+            <li class="page-item disabled"><a>...</a></li>
+        <% } %>
+        <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+            <% if (i == current) { %> <%# if this is the current page display this element with the active class,I think the color is blue  %>
+                <li class="page-item active"><a class="page-link"><%= i %></a></li>
+            <% } else { %>
+
+                <li><a class="page-link" href="/homepage?page=<%= i %>"><%= i %></a></li>
+            <% } %>
+            <% if (i == Number(current) + 4 && i < pages) { %>
+              <%# displaying .... between our page links  E.g  1 ... 4 %>
+                <li class="page-item disabled"><a class="page-link">...</a></li>
+            <% } %>
+        <% } %>
+        <%# so checking if the current page is last one   Remember pages is the last page %>
+        <% if (current == pages) { %>
+          <%# if it is display this %>
+            <li class="page-item disabled"><a class="page-link">Last</a></li>
+        <% } else { %>
+          <%# otherwise display this %>
+            <li><a class="page-link" href="/homepage?page=<%= pages %>">Last</a></li>
+        <% } %>
+        </ul>
+        <% } %>
+      </div>
+  </div>
+  <%}%>
+</body>
