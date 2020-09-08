@@ -6,6 +6,7 @@ let passport = require('passport');
 
 
 let authController = {
+
   homepage:async(req,res)=>
 {
 let query = {};
@@ -87,7 +88,7 @@ if(err) console.log(err);
 
     }
 
-    res.locals.user = req.user;
+
     // console.log(req.user);
     return res.redirect('/homepage');
   // the ERR HTTP headers happens when we use two or more times in a row  res   like res.render('home') then res.redirect('/')
@@ -114,7 +115,9 @@ if(err) console.log(err);
       email,
       password:hashedPassword
     });
-    user.save().then(()=>{ res.redirect('/register'); }).catch((e)=>console.log(e));
+    user.save().then(()=>{
+      res.locals.user = req.user;
+      return  res.redirect('/register'); }).catch((e)=>console.log(e));
 
 
   },

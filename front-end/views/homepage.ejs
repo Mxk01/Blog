@@ -1,6 +1,6 @@
 <%- include('./partials/header') %>
 <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&display=swap" rel="stylesheet">
-
+<!-- Bootstrap core CSS -->
 
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -46,7 +46,20 @@
   <title><%=user.username%></title>
 </head>
 <body style="background:#2c2c54; background-size:cover; background-repeat:no-repeat; ">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+  <body>
+
+
+
+
+
+
+
     <div class="container">
+
   <h1 class="mb-4 mt-5" style="font-family: 'Abril Fatface', cursive; color:#ffffff;">Blog Articles</h1>
   <a href="/articles/new" class="btn btn-success" style="background-color:#ff4757; border:none;">New Article</a>
   <a href="/articles/myArticle" class="btn btn-success" style="background-color:#ff4757; border:none;">My article</a>
@@ -96,11 +109,13 @@
             <li class="page-item disabled"><a class="page-link">Last</a></li>
         <% } else { %>
           <%# otherwise display this %>
-            <li><a class="page-link" href="/homepage?page=<%= pages %>">Last</a></li>
+            <li><a class="page-link" href="./homepage?page=<%= pages %>">Last</a></li>
         <% } %>
         </ul>
         <% } %>
       </div>
   </div>
   <%}%>
+
+
 </body>

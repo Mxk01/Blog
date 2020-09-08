@@ -26,8 +26,11 @@ await  Article.findById({_id:req.params.id}).then((fullArticle)=>{
      next();
   },
 seeMyArticle:async(req,res)=>{
+
+  let userId = req.user._id;
   console.log(req.user._id);
-  const articles =  await Article.findById({articleId:req.user._id});
+  // const articles =  await Article.findById({_id:userId});
+     const articles =  await Article.findOne({articleId:req.user._id});
     res.render('myArticles',{articles});
 }
 
