@@ -5,8 +5,10 @@
     <title></title>
   </head>
   <body>
-
-     <h1><%= articles.title %> </h1>
-
+ <% articles.forEach( (article ) => { %>
+     <h1><%= article.title %> </h1>
+     <h1><%= article.description %> </h1>
+     <h1><%= article.markdown %> </h1>
+<% }) %>
   </body>
 </html>

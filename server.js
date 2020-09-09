@@ -54,15 +54,16 @@ app.set('view engine','ejs');
 app.use(passport.initialize()); //  initializes passport and lets us use serializeUser and deserializeUser functions
 app.use(passport.session()); // session support for passport
 
-
-
 app.use(flash());
-
 app.use((req,res,next)=>{
   res.locals.error_msg = req.flash('error_msg');
   res.locals.user = req.user;
   next();
 })
+
+
+
+
 
 app.get('/',(req,res)=>{
  return res.redirect('/login')

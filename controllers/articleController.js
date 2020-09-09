@@ -30,7 +30,7 @@ seeMyArticle:async(req,res)=>{
   let userId = req.user._id;
   console.log(req.user._id);
   // const articles =  await Article.findById({_id:userId});
-     const articles =  await Article.findOne({articleId:req.user._id});
+     const articles =  await Article.find({customerId:req.user._id});
     res.render('myArticles',{articles});
 }
 

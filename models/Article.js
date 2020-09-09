@@ -2,13 +2,11 @@ let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 let articleSchema = new Schema(
 {
-  articleId:
-  {
-
-      // This is a relation between two mongoose models
-      type:mongoose.Schema.Types.ObjectId, // ObjectId  is an unique identifier which belongs to the user which has placed this order;
-      ref:'User' // Here we specify that we want the  id of that user from the User model
-  },
+  customerId: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User',
+                required: true
+                },
 title:
 {
   type:String
