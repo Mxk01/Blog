@@ -4,7 +4,7 @@
  let port = process.env.PORT||3000;
  let passport = require('passport');
  let session =  require('express-session');
-
+const fileUpload = require("express-fileupload");
  let mongoose = require('mongoose');
  const methodOverride = require('method-override')
 let mongoDbStore = require('connect-mongo')(session);
@@ -18,7 +18,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 let dotenv = require('dotenv');
 dotenv.config();
 
- mongoose.connect(process.env.MONGO_URI,{useNewUrlParser:true,useUnifiedTopology:true,useCreateIndex:true,useFindAndModify:true});
+
+// Using fileUpload middleware
+app.use(fileUpload());
+app.use(express.static("uploads"));
+
+ mongoose.connect(process.env.MONGO_URI,{useNewUrlParser:true,useUnifiedTopology:true,useCreateIndex:true,useFindAndModify:false});
    let connection  = mongoose.connection;
    connection.once('open',()=>{ console.log('Succesfully connected to mongo') }).catch((e)=>{ console.log(e); });
 

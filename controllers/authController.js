@@ -9,11 +9,13 @@ let authController = {
 
   homepage:async(req,res)=>
 {
+
+
 let query = {};
 let page = 1; // Page is 1 just in case req.query.page is null or undefined;
 let perpage = 3; // number of items per page (e.g 3 posts)  ( this is basically our limit )
 
-console.log(`Page number ${req.query.page}`);
+// console.log(`Page number ${req.query.page}`);
 
 if(req.query.page!=null) page = req.query.page; // getting page data from link queries
 
@@ -29,7 +31,7 @@ if(req.query.page!=null) page = req.query.page; // getting page data from link q
 
 
 query.skip = (perpage * page)-perpage; // So limit*page-limit is just to make sure our array starts at index 0    4*1-4 =0  4*2-
-console.log(`Skip ${query.skip} values`)
+// console.log(`Skip ${query.skip} values`)
 query.limit = perpage; // It's like passing {limit:2} as 3rd parameter
 
 // find takes in 3 parameter  1.the condition (find all elements by id: 'someid ') 2.queryProjection (which fields to exclude and include  from the documents)
@@ -40,10 +42,10 @@ query.limit = perpage; // It's like passing {limit:2} as 3rd parameter
 Article.find({},{},query,(err,articles)=>{
 if(err) console.log(err);
 
-  Article.count((err,count)=>{
+  Article.countDocuments((err,count)=>{
   if(err) console.log(err);
   // count parameter gives us the number of documents then we divide it by our limit (perpage) E.g 16 documents / 4 perpage =  4 pages
-  res.render('homepage',{ articles,current:page,pages:Math.ceil(count/perpage) });
+return   res.render('homepage',{ articles,current:page,pages:Math.ceil(count/perpage) });
   });
   })
     //
@@ -87,8 +89,12 @@ if(err) console.log(err);
       return next(err);
 
     }
+// And set up the  user local variable right before redirecting to homepage so we can access our user data;
+// Now let's see how this works :)
+// Now let's create a new user to see if the user can see other users articles.Looks good
+// Now all is left in this video is to make delete and edit links available only for personal articles
 
-
+      res.locals.user = req.user;
     // console.log(req.user);
     return res.redirect('/homepage');
   // the ERR HTTP headers happens when we use two or more times in a row  res   like res.render('home') then res.redirect('/')
@@ -116,7 +122,7 @@ if(err) console.log(err);
       password:hashedPassword
     });
     user.save().then(()=>{
-      res.locals.user = req.user;
+
       return  res.redirect('/register'); }).catch((e)=>console.log(e));
 
 

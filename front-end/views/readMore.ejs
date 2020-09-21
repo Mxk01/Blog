@@ -23,10 +23,12 @@
         <a class="nav-link" href="/register">Register</a>
       </li>
        <% } else { %>
-         <li class="nav-item">
-           <a class="nav-link btn btn-warning" href="#"><%= user.username %> </a>
-         </li>
-         <form  action="/logout" method="post">
+         <div class="d-inline-flex ml-3 mr-2 p-2 bd-highlight">
+
+           <a class="nav-link mt-4" href="#"><%= user.username %> </a>
+           <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/d3c59320-7092-4e49-a860-adb32f58ccea/d4flaqu-199b8304-28bf-4233-8713-2319d4437b7b.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOiIsImlzcyI6InVybjphcHA6Iiwib2JqIjpbW3sicGF0aCI6IlwvZlwvZDNjNTkzMjAtNzA5Mi00ZTQ5LWE4NjAtYWRiMzJmNThjY2VhXC9kNGZsYXF1LTE5OWI4MzA0LTI4YmYtNDIzMy04NzEzLTIzMTlkNDQzN2I3Yi5wbmcifV1dLCJhdWQiOlsidXJuOnNlcnZpY2U6ZmlsZS5kb3dubG9hZCJdfQ.QJsHGUt4VHl_cvMPr35_ObPkBFzYvaU58LpX6KYpN0U" alt="" class="rounded-circle" width="75" height="75">
+         </div>
+         <form  action="/logout"  class="mt-4" method="post">
             <input class="btn btn-primary mt-1 ml-1" style="background-color:transparent; color:black; border:none;" type="submit" value="Logout">
          </form>
         <% } %>
@@ -46,13 +48,17 @@
   <title><%=user.username%></title>
 </head>
 
-<body style="background:#2c2c54; background-size:cover; background-repeat:no-repeat; ">
+<body>
     <div class="container">
-  <h1 class="mb-4 mt-5" style="font-family: 'Abril Fatface', cursive; color:#ffffff;">Blog Articles</h1>
+
 
     <div class="card mt-4">
       <div class="card-body">
-        <h4 class="card-title"><%= article.title %></h4>
+
+
+        <h4 class="card-title text-warning display-4"><%= article.title %></h4>
+
+
         <div class="card-subtitle text-muted mb-2">
           <%= article.description %>
 
@@ -60,8 +66,8 @@
           <p><%= article.markdown %></p>
 
           <p>Created at : <%= article.createdAt %></p>
-          <a href="/homepage" class="btn btn-warning mt-5"  border:none;">Go back</a>
-          <a href="/articles/editArticle/<%=article._id %>" class="btn btn-success mt-5"  style="border:none;">Edit</a>
+          <a href="/homepage" class="btn btn-warning mt-5"  style=" background-color:#95afc0; color:white; border:none;">Go back</a>
+
         </div>
 
       </div>
